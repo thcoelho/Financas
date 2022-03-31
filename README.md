@@ -9,14 +9,15 @@ Para se testar as funcionalidades deste projeto, insira o arquivo Financas.py em
 ```python
 import Financas
 ```
-Para criar uma carteira, alimente a classe Carteira com uma lista de ativos e pesos na carteira para cada ativo, a exemplo:
+Para criar uma portfólio, alimente a classe com uma lista de ativos e pesos para cada um destes:
 
 ```python
 Ativos = ["ITSA4", "BBAS3", "WEGE3"]
 Pesos = [0.3, 0.4, 0.3]
 Carteira = Financas.Carteira(Ativos, Pesos)
 ```
-Se nenhuma lista de pesos for passada ao construtor, será assumido que todos os ativos possuem pesos iguais na carteira.
+Se nenhuma lista de pesos for passada ao construtor, será assumido que todos os ativos possuem pesos iguais na carteira. Os pesos tem de estar na mesma ordem que os ativos. Neste nosso exemplo: ITSA4 corresponde a 30% da carteira, BBAS3 a 40% e WEGE3 a 30%.
+
 Observação: a vírgula separa os objetos da lista no python, então ao passar os pesos, um peso de 10% para o primeiro ativo é: 0.1
 
 O Objeto carteira possui funções a fim de se obter diversas métricas acerca dos ativos, com mais a serem adicionadas:
