@@ -15,7 +15,8 @@ class Carteira:
     def __init__(self, Ativos):
         self.Ativos = [Ativo + ".SA" for Ativo in Ativos]
         Carteira.Coletar_Precos(self)
-    
+        # TODO self.Pesos
+
     def Coletar_Precos(self):
         """
         Coletar Precos dos Ativos, exportar para DataFrame e salvar em propriedade no objeto carteira. Também cria objeto Ticker do módulo yfinance para cada Papel
@@ -43,12 +44,12 @@ class Carteira:
         """
         Calcular a correlação entre os ativos de uma carteira teórica
         """
-        print("A Matriz de correlção entre os ativos é:")
+        print("A Matriz de correlação entre os ativos é:")
         print(self.Precos.corr())
     
     def Betas(self):
         """
-        Coletar o Beta de cada 
+        Coletar o Beta de cada ativo
         """
         Betas = pd.DataFrame()
         Betas["Papel"] = self.Ativos
@@ -56,6 +57,10 @@ class Carteira:
 
         print("Os betas dos ativos são:")
         print(Betas)
+
+    # TODO def Modigliani(self):
+
+    # TODO def Sharpe(self):
         
 
 
