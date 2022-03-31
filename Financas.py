@@ -12,10 +12,11 @@ def Ibovespa():
 
 class Carteira:
     
-    def __init__(self, Ativos):
+    def __init__(self, Ativos, Pesos=None):
         self.Ativos = [Ativo + ".SA" for Ativo in Ativos]
+        self.Pesos = [(1 / len(Ativos)) for i in Ativos] if Pesos is None else Pesos
         Carteira.Coletar_Precos(self)
-        # TODO self.Pesos
+
 
     def Coletar_Precos(self):
         """
@@ -57,6 +58,17 @@ class Carteira:
 
         print("Os betas dos ativos são:")
         print(Betas)
+
+    def Grafico(self,inicio=None, final=None):
+        """
+        Gráfico com a evolução dos ativos selecionados. Se nada for passado para as datas, serão utilizados os dados
+        mais recentes (no caso do final) ou mais antigos (no caso do inicio). Formato das datas:
+        Ex: Grafico("2010, "2020)
+        """ 
+        inicio = self.Precos.index[0] if inicio is None else inicio
+        final = self.Precos.index[-1] if final is None else final
+
+        self.Precos.loc[inicio:final,:].plot()
 
     # TODO def Modigliani(self):
 
