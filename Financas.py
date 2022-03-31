@@ -27,7 +27,7 @@ class Carteira:
         tickers = [yf.Ticker(f"{ticker}") for ticker in self.Ativos]
 
         for ticker in tickers:
-            df[ticker] = ticker.history()["Close"]
+            df[ticker] = ticker.history(period="max")["Close"]
 
         df.columns = self.Ativos
         self.Precos = df
