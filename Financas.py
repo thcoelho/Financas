@@ -1,5 +1,6 @@
 import pandas as pd
 import yfinance as yf
+import numpy as np
 
 def Ibovespa():
     """
@@ -69,6 +70,21 @@ class Carteira:
         final = self.Precos.index[-1] if final is None else final
 
         self.Precos.loc[inicio:final,:].plot()
+
+    def Retornos(self,inicio=None, final=None):
+        """
+        Calcula os retornos da carteira de acordo com o recorte temporal selecionado
+        """
+        inicio = self.Precos.index[0] if inicio is None else inicio
+        final = self.Precos.index[-1] if final is None else final
+
+        Retornos = self.Precos.loc[inicio:final,:].pct_change()
+        Retornos_Com_Pesos = Retornos.dot(np.array(self.Pesos))
+        Retornos_Acumulados = (1+Retornos_Com_Pesos).cumprod()
+        Retorno_Total = ((Retornos_Acumulados[-1] - 1)*100)
+        print(f"{Retorno_Total}%")
+
+
 
     # TODO def Modigliani(self):
 
