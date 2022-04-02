@@ -64,7 +64,7 @@ class Carteira:
         """
         Gráfico com a evolução dos ativos selecionados. Se nada for passado para as datas, serão utilizados os dados
         mais recentes (no caso do final) ou mais antigos (no caso do inicio). Formato das datas:
-        Ex: Grafico("2010, "2020)
+        Ex: Grafico("2010", "2020")
         """ 
         inicio = self.Precos.index[0] if inicio is None else inicio
         final = self.Precos.index[-1] if final is None else final
