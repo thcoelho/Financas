@@ -5,7 +5,7 @@ import numpy as np
 
 def Ibovespa():
     """
-    Retorno Dataframe com as empresas presentes no índice IBOVESPA
+    Retorna Dataframe com as empresas presentes no índice IBOVESPA
     """
     url = "https://pt.wikipedia.org/wiki/Lista_de_companhias_citadas_no_Ibovespa"
     df = pd.read_html(url)[0]
@@ -21,7 +21,8 @@ class Carteira:
 
     def Coletar_Precos(self):
         """
-        Coletar Precos dos Ativos, exportar para DataFrame e salvar em propriedade no objeto carteira. Também cria objeto Ticker do módulo yfinance para cada Papel
+        Coletar Precos dos Ativos, exportar para DataFrame e salvar em propriedade no objeto carteira. Salva o histórico de preços e o objeto 
+        yfinance.ticker como  atributos.
         """
         df = pd.DataFrame()
 
@@ -37,21 +38,21 @@ class Carteira:
 
     def Desvios(self):
         """
-        Função para calcular rapidamente o desvio padrão de ativos de uma carteria teórica
+        Calcula o desvio padrão da carteira
         """
         print(" Os desvios padrão são:")
         print(self.Precos.std())
 
     def Correlacao(self):
         """
-        Calcular a correlação entre os ativos de uma carteira teórica
+        Calcula a correlação entre os ativos da carteira
         """
         print("A Matriz de correlação entre os ativos é:")
         print(self.Precos.corr())
 
     def Betas(self):
         """
-        Coletar o Beta de cada ativo
+        Coleta o Beta de cada ativo
         """
         Betas = pd.DataFrame()
         Betas["Papel"] = self.Ativos
