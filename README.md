@@ -9,6 +9,14 @@ Para se testar as funcionalidades deste projeto, insira o arquivo Financas.py em
 ```python
 import Financas
 ```
+
+A função Ibovespa retorna DataFrame com informações sobre as ações que compõem o índice:
+
+```
+Financas.Ibovespa()
+```
+
+
 Para criar uma portfólio, alimente a classe com uma lista de ativos e pesos para cada um destes:
 
 ```python
@@ -34,6 +42,9 @@ Carteira.Correlacao()
 
 # Grafico de evolução dos precos:
 Carteira.Grafico(Data_inicial, Data_final)
+
+# O Retorno total pode ser calculado a partir da função Retorno:
+Carteira.Retorno(Data_inicial, Data_final)
 
 ```
 
