@@ -12,12 +12,12 @@ import Financas
 
 A função Ibovespa retorna DataFrame com informações sobre as ações que compõem o índice:
 
-```
+```python
 Financas.Ibovespa()
 ```
 
 
-Para criar uma portfólio, alimente a classe com uma lista de ativos e pesos para cada um destes:
+Para criar um portfólio, alimente a classe com uma lista de ativos e pesos para cada um destes:
 
 ```python
 Ativos = ["ITSA4", "BBAS3", "WEGE3"]
