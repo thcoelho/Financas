@@ -4,9 +4,9 @@ import numpy as np
 
 
 def Ibovespa():
-    """
+    '''
     Retorna Dataframe com as empresas presentes no índice IBOVESPA
-    """
+    '''
     url = "https://pt.wikipedia.org/wiki/Lista_de_companhias_citadas_no_Ibovespa"
     df = pd.read_html(url)[0]
     df.set_index("Código", inplace=True)
@@ -14,16 +14,25 @@ def Ibovespa():
 
 
 class Carteira:
+    '''
+    Classe que contém ativos e seus respectivos pesos numa carteira teórica, sendo possível realizar 
+    diversas operações para melhor se explorar o portfólio. Uma instância desta classe deve ser criada:
+    
+    EX:
+    Ativos = ["ITSA4", "BBAS3", "WEGE3"]
+    Pesos = [0.3, 0.4, 0.3]
+    Carteira = Financas.Carteira(Ativos, Pesos)
+    '''
     def __init__(self, Ativos, Pesos=None):
         self.Ativos = [Ativo + ".SA" for Ativo in Ativos]
         self.Pesos = [(1 / len(Ativos)) for i in Ativos] if Pesos is None else Pesos
         Carteira.Coletar_Precos(self)
 
     def Coletar_Precos(self):
-        """
+        '''
         Coletar Precos dos Ativos, exportar para DataFrame e salvar em propriedade no objeto carteira. Salva o histórico de preços e o objeto 
         yfinance.ticker como  atributos.
-        """
+        '''
         df = pd.DataFrame()
 
         # Criar Lista contendo os objetos Yfinance.Tickers para utilização em outras funções do módulo
@@ -37,23 +46,23 @@ class Carteira:
         self.Tickers = tickers
 
     def Desvios(self):
-        """
+        '''
         Calcula o desvio padrão da carteira
-        """
+        '''
         print(" Os desvios padrão são:")
         print(self.Precos.std())
 
     def Correlacao(self):
-        """
+        '''
         Calcula a correlação entre os ativos da carteira
-        """
+        '''
         print("A Matriz de correlação entre os ativos é:")
         print(self.Precos.corr())
 
     def Betas(self):
-        """
+        '''
         Coleta o Beta de cada ativo
-        """
+        '''
         Betas = pd.DataFrame()
         Betas["Papel"] = self.Ativos
         Betas["Beta"] = [ticker.info.get("beta") for ticker in self.Tickers]
@@ -62,20 +71,20 @@ class Carteira:
         print(Betas)
 
     def Grafico(self, inicio=None, final=None):
-        """
+        '''
         Gráfico com a evolução dos ativos selecionados. Se nada for passado para as datas, serão utilizados os dados
         mais recentes (no caso do final) ou mais antigos (no caso do inicio). Formato das datas:
         Ex: Grafico("2010", "2020")
-        """
+        '''
         inicio = self.Precos.index[0] if inicio is None else inicio
         final = self.Precos.index[-1] if final is None else final
 
         self.Precos.loc[inicio:final, :].plot()
 
     def Retornos(self, inicio=None, final=None):
-        """
+        '''
         Calcula os retornos da carteira de acordo com o recorte temporal selecionado
-        """
+        '''
         inicio = self.Precos.index[0] if inicio is None else inicio
         final = self.Precos.index[-1] if final is None else final
 
