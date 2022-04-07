@@ -1,4 +1,4 @@
 Testes.ipynb
 .vscode
-__pycache__
-__pycache__/Financas.cpython-39.pyc
+*.pyc
+__pycache__/
