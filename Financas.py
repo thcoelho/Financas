@@ -49,7 +49,7 @@ class Carteira:
         '''
         Calcula o desvio padrão da carteira
         '''
-        print(" Os desvios padrão são:")
+        print("Os desvios padrão são:")
         print(self.Precos.std())
 
     def Correlacao(self):
@@ -92,8 +92,23 @@ class Carteira:
         Retornos_Com_Pesos = Retornos.dot(np.array(self.Pesos))
         Retornos_Acumulados = (1 + Retornos_Com_Pesos).cumprod()
         Retorno_Total = (Retornos_Acumulados[-1] - 1) * 100
-        print(f"{Retorno_Total}%")
+        return Retorno_Total
+
+    def Selic(self):
+        '''
+        Retorna o último valor da META SELIC
+        '''
+        Selic_str = pd.read_html("http://www.yahii.com.br/TaxasSelic.html")[3].iloc[2,4]
+        virgula = int(len(Selic_str) / 2)
+        Selic = Selic_str[:virgula] + "." + Selic_str[virgula:]
+        Selic = float(Selic)
+        return Selic
 
     # TODO def Modigliani(self):
 
     # TODO def Sharpe(self):
+        # Retornos = self.Retornos()
+        # Selic = self.Selic()
+        # desvios = self.Desvios()
+        # Sharpe = (Retornos - Selic / desvios)
+        # return Sharpe
