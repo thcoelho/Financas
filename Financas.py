@@ -1,6 +1,7 @@
 import pandas as pd
 import yfinance as yf
 import numpy as np
+from scipy.stats import norm
 
 
 def Ibovespa():
@@ -15,9 +16,9 @@ def Ibovespa():
 
 class Carteira:
     """
-    Classe que contém ativos e seus respectivos pesos numa carteira teórica, sendo possível realizar 
+    Classe que contém ativos e seus respectivos pesos numa carteira teórica, sendo possível realizar
     diversas operações para melhor se explorar o portfólio. Uma instância desta classe deve ser criada:
-    
+
     EX:
     Ativos = ["ITSA4", "BBAS3", "WEGE3"]
     Pesos = [0.3, 0.4, 0.3]
@@ -31,7 +32,7 @@ class Carteira:
 
     def Coletar_Precos(self):
         """
-        Coletar Precos dos Ativos, exportar para DataFrame e salvar em propriedade no objeto carteira. Salva o histórico de preços e o objeto 
+        Coletar Precos dos Ativos, exportar para DataFrame e salvar em propriedade no objeto carteira. Salva o histórico de preços e o objeto
         yfinance.ticker como  atributos.
         """
         df = pd.DataFrame()
@@ -46,7 +47,7 @@ class Carteira:
         self.Precos = df
         self.Tickers = tickers
 
-    def Desvios(self):
+    def Desvios_Individuais(self):
         """
         Calcula o desvio padrão da carteira
         """
@@ -107,12 +108,26 @@ class Carteira:
         Selic = float(Selic)
         return Selic
 
+    # TODO def Modigliani(self):
 
-# TODO def Modigliani(self):
+    # TODO def Desvio_Portfolio():
+    # tabela_covariancia =
 
-# TODO def Sharpe(self):
-# Retornos = self.Retornos()
-# Selic = self.Selic()
-# desvios = self.Desvios()
-# Sharpe = (Retornos - Selic / desvios)
-# return Sharpe
+    # def Sharpe(self):
+        # Retornos_Log_Normal = np.sum(
+            # np.log(self.Precos / self.Precos.shift(1).dropna()), axis=1
+        # )
+        # Retornos_Ponderados = Retornos_Log_Normal.dot(self.Pesos)
+        # Retornos = Retornos_Ponderados.mean()
+        # Selic = self.Selic()
+        # Desvios = Retornos_Ponderados.std()
+        # Sharpe = (Retornos - Selic) / Desvios
+        # return Sharpe
+
+    def Value_At_Risk(self, nivel_confianca=0.05):
+        Retornos_Log_Normal = np.log(self.Precos / self.Precos.shift(1).dropna())
+        Retornos_Ponderados = Retornos_Log_Normal.dot(self.Pesos)
+        Desvios = Retornos_Ponderados.std()
+        Media_Retornos = Retornos_Ponderados.mean()
+        Value_At_Risk = norm.ppf(nivel_confianca, Media_Retornos, Desvios) * 100
+        return Value_At_Risk
